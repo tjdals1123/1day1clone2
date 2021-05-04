@@ -12,4 +12,10 @@ public class BaordController {
 		
 		
 	}
+	
+	@RequestMapping("/register")
+	public void register(){
+		
+		
+	}
 }

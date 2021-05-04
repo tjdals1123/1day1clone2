@@ -7,4 +7,11 @@ import org.ict.domain.BoardVO;
 public interface BoardService {
 
 	public List<BoardVO> list();
+	
+	public void modify(Long bno);
+	
+	public void insert(BoardVO board);
+	
+	public void remove(Long bno);
+
 }
