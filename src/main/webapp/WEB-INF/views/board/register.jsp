@@ -15,14 +15,73 @@
 	<div class="container">
 	<h1 class="text-primary text-center">글쓰기</h1>
 	<br><br>
-		제목	 : <input class="form-control" type="text" name="title"><br><hr>
-		내용	 : <input class="form-control" type="text" name="content"><br><hr>
-		작성자 : <input class="form-control" type="text" name="writer"><br><hr>
+		제목	 : <input class="form-control" type="text" id="title" name="title"><br><hr>
+		내용	 : <input class="form-control" type="text" name="content" id="content"><br><hr>
+		작성자 : <input class="form-control" type="text" name="writer" id="writer"><br><hr>
 		작성일자: <input class="form-control" type="text" name="regdate" readonly><br><hr>
+	<input type="button" class="btn btn-primary float-right" id="complBtn" value="완료">
 	</div>
-	
 	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+			
+			$("#complBtn").on("click", function(){
+				
+				var title = $("#title").val();
+				var content = $("#content").val();
+				var writer = $("#writer").val();
+				
+				console.log(title);
+				console.log(content);
+				console.log(writer);
+				
+				$.ajax({
+					
+					type : 'post',
+					url : '/board/register',
+					header : {
+						
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "POST"
+					},
+					contentType : "application/json",
+					data : JSON.stringify({
+						
+						title : title,
+						writer : writer,
+						content : content
+					}),
+					dataType : 'text',
+					success : function(result) {
+						
+						console.log("result: " + result);
+						if(result == 'SUCCESS') {
+							
+							alert("작성이 완료되었습니다.");
+ 							location.href="/board/list";
+						}
+					}
+					
+					
+				});
+			});
+			
 		
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

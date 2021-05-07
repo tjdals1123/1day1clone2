@@ -9,7 +9,7 @@
 		select * from ictboard
 	</select>
 	
-	<insert id="register">
+	<insert id="insert">
 		insert into ictboard (title, writer, content) values (#{title}, #{writer}, #{content})
 	</insert>
 	

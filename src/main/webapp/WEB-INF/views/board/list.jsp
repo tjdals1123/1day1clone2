@@ -15,7 +15,7 @@
 	
 	<div class="container">
 		<table class="table table-hover">
-			<thead >
+			<thead>
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
@@ -28,6 +28,7 @@
 			
 			</tbody>
 		</table>
+		<a href="/board/register"><input type="button" class="btn btn-primary float-right" value="글쓰기"></a>
 	</div>
 	
 	<script type="text/javascript">
