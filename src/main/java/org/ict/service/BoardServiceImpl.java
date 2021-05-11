@@ -3,6 +3,7 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 import org.ict.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modify(Long bno) {
+	public void modify(BoardVO board) {
 		
-		mapper.modify(bno);
+		mapper.modify(board);
 	}
 
 	@Override
@@ -35,6 +36,18 @@ public class BoardServiceImpl implements BoardService {
 	public void remove(Long bno) {
 		
 		mapper.remove(bno);
+	}
+
+	@Override
+	public BoardVO read(Long bno) {
+		
+		return mapper.read(bno);
+	}
+
+	@Override
+	public List<BoardVO> listCriteria(Criteria cri) {
+		
+		return mapper.listCriteria(cri);
 	}
 
 }

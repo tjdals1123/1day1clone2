@@ -6,7 +6,13 @@
 <mapper namespace="org.ict.mapper.BoardMapper">
 	
 	<select id="list" resultType="org.ict.domain.BoardVO">
-		select * from ictboard
+		select * from ictboard where bno > 0
+	</select>
+	
+	<select id="listCriteria" resultType="org.ict.domain.BoardVO">
+		select * from ictboard where bno > 0
+		ORDER BY bno DESC, regdate DESC
+		LIMIT #{pageStart}, #{number}
 	</select>
 	
 	<insert id="insert">
@@ -14,11 +20,15 @@
 	</insert>
 	
 	<update id="modify">
-		update ictboard set title = #{title}, content = #{content}, writer = #{writer} where bno = #{bno}
+		update ictboard set title = #{title}, content = #{content} where bno = #{bno}
 	</update>
 	
 	<delete id="remove">
 		delete from ictboard where bno = #{bno}
 	</delete>
+	
+	<select id="read" resultType="org.ict.domain.BoardVO">
+		select * from ictboard where bno = #{bno}
+	</select>
 	
 </mapper>

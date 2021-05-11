@@ -10,12 +10,21 @@ public class BaordController {
 	@RequestMapping("/list")
 	public void list() {
 		
-		
 	}
 	
 	@RequestMapping("/register")
 	public void register(){
 		
+	}
+	
+	@RequestMapping("/get")
+	public String get() {
+		
+		return "/board/get";
+	}
+	
+	@RequestMapping("/modify")
+	public void modify() {
 		
 	}
 }

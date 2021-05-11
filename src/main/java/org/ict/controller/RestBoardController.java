@@ -1,16 +1,22 @@
 package org.ict.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.attribute.standard.Media;
+
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
+import org.ict.domain.PageMaker;
 import org.ict.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +44,6 @@ public class RestBoardController {
 			list = service.list();
 			entity = new ResponseEntity<List<BoardVO>>(list, HttpStatus.OK);
 			
-			log.info(entity);
 			
 		} catch(Exception e){
 			entity = new ResponseEntity<List<BoardVO>>(HttpStatus.BAD_REQUEST);
@@ -60,6 +65,106 @@ public class RestBoardController {
 		} catch(Exception e) {
 	
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@GetMapping(value="/get/{bno}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<BoardVO> read(@PathVariable("bno") Long bno) {
+		
+		
+		BoardVO board;
+		
+		ResponseEntity<BoardVO> entity = null;
+		
+		try {
+			
+			board = service.read(bno);
+			
+			entity = new ResponseEntity<BoardVO>(board, HttpStatus.OK);
+			
+			
+		}catch(Exception e) {
+			
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+		
+	}
+	
+	@RequestMapping(value="/delete/{bno}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("bno") Long bno) {
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			service.remove(bno);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+		} catch(Exception e) {
+			
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@PostMapping(value="/modify", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}
+					,consumes="application/json")
+	public ResponseEntity<String> modify( @RequestBody BoardVO board){
+		
+		log.info(board);
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			
+			service.modify(board);
+			
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			log.info(entity);
+		} catch(Exception e) {
+			
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+	}
+	
+	@GetMapping(value="/list/{page}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Map<String, Object>> listCriteria(@PathVariable("page")int page) {
+		
+		Criteria cri = new Criteria();
+		
+		cri.setPage(page);
+		
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<BoardVO> list = service.listCriteria(cri);
+		
+		result.put("list", list);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		pageMaker.setCri(cri);
+		
+		pageMaker.setTotalBoard(131);
+		
+		result.put("pageMaker", pageMaker);
+		
+		
+		try {
+			
+			entity = new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			
+			entity = new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;

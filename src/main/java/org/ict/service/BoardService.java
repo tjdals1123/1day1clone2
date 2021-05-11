@@ -3,15 +3,20 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 
 public interface BoardService {
 
 	public List<BoardVO> list();
 	
-	public void modify(Long bno);
+	public void modify(BoardVO board);
 	
 	public void insert(BoardVO board);
 	
 	public void remove(Long bno);
+	
+	public BoardVO read(Long bno);
+	
+	public List<BoardVO> listCriteria(Criteria cri);
 
 }

@@ -40,8 +40,8 @@
 				
 				$(data).each(function(){
 					
-					str += "<tr><td>" + this.bno + "</td><td>" + this.title
-						+ "</td><td>" + this.writer + "</td><td>" + this.regdate
+					str += "<tr><td>" + this.bno + "</td><td><a href='/board/get?bno="+this.bno+"'>" + this.title
+						+ "</a></td><td>" + this.writer + "</td><td>" + this.regdate
 						+ "</td><td>" + this.updatedate + "</td></tr>";
 					
 				});
