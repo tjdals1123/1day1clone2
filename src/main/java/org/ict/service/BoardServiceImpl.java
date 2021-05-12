@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ict.domain.BoardVO;
 import org.ict.domain.Criteria;
+import org.ict.domain.SearchCriteria;
 import org.ict.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,21 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> listCriteria(Criteria cri) {
 		
 		return mapper.listCriteria(cri);
+	}
+
+	@Override
+	public int totalcount() {
+		return mapper.totalcount();
+	}
+
+	@Override
+	public List<BoardVO> listSearch(Criteria cri, String searchType, String keyword) {
+		return mapper.listSearch(cri, searchType, keyword);
+	}
+
+	@Override
+	public int searchCountPage(SearchCriteria search) {
+		return mapper.searchCountPage(search);
 	}
 
 }

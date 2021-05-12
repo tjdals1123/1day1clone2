@@ -20,6 +20,9 @@
 		내용	 : <input class="form-control" type="text" name="content" id="content" readonly><br><hr>
 		작성자 : <input class="form-control" type="text" name="writer" id="writer" readonly><br><hr>
 		작성일자: <input class="form-control" type="text" name="regdate" id="regdate" readonly><br><hr>
+		<div id="get"></div>
+		
+		
 	<a href="/board/list">
 	<input type="button" class="btn btn-primary float-right" id="listBack" value="목록">
 	</a>
@@ -35,7 +38,7 @@
 		
 		var bno = para[1]
 		
-		console.log(bno);
+		var str = "";
 		
 		$.ajax({
 			
@@ -59,6 +62,16 @@
 				$("#content").val(board.content);
 				$("#writer").val(board.writer);
 				$("#regdate").val(board.regdate);
+				
+				if(board.updatedate != null){
+					
+				str += "<input class='form-control' type='text' name='updatedate' id='updatedate' value='"+ board.updatedate +"' readonly><br><hr>"
+				
+				
+				$("#get").append(str);
+				
+				}
+				
 			}
 			
 		});

@@ -10,6 +10,7 @@ import javax.print.attribute.standard.Media;
 import org.ict.domain.BoardVO;
 import org.ict.domain.Criteria;
 import org.ict.domain.PageMaker;
+import org.ict.domain.SearchCriteria;
 import org.ict.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -153,7 +154,7 @@ public class RestBoardController {
 		
 		pageMaker.setCri(cri);
 		
-		pageMaker.setTotalBoard(131);
+		pageMaker.setTotalBoard(service.totalcount());
 		
 		result.put("pageMaker", pageMaker);
 		
@@ -166,6 +167,50 @@ public class RestBoardController {
 			
 			entity = new ResponseEntity<Map<String,Object>>(HttpStatus.BAD_REQUEST);
 		}
+		 
+		return entity;
+	}
+	
+	@GetMapping(value="list/{page}/{searchType}/{keyword}", produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<Map<String, Object>> listSearch(@PathVariable("page") int page,
+															@PathVariable("searchType") String searchType,
+															@PathVariable("keyword") String keyword) {
+		
+		ResponseEntity<Map<String, Object>> entity = null;
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		Criteria cri = new Criteria();
+		
+		cri.setPage(page);
+		
+		SearchCriteria search = new SearchCriteria();
+		
+		search.setSearchType(searchType);
+		
+		search.setKeyword(keyword);
+		
+		List<BoardVO> list = service.listSearch(cri, searchType, keyword);
+		
+		int count = service.searchCountPage(search);
+		
+		PageMaker pageMaker = new PageMaker();
+		
+		pageMaker.setTotalBoard(count);
+		
+		result.put("list", list);
+		result.put("cri", cri);
+		result.put("pageMaker", pageMaker);
+		
+		try {
+			
+			entity = new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
+		} catch(Exception e) {
+			
+			entity = new ResponseEntity<Map<String, Object>>(HttpStatus.BAD_REQUEST);
+		}
+		
+		
 		
 		return entity;
 	}

@@ -30,6 +30,8 @@
 		
 		var bno = para[1];
 		
+
+		
 		
 		$("#bnoo").val(bno);
 			
@@ -67,6 +69,8 @@
 						
 						alert("게시글 수정이 완료되었습니다.");
  						location.href="/board/get?bno="+ bno;
+ 						
+
 					}
 				}
 				
