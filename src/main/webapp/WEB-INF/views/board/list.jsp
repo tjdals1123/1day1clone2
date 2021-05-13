@@ -40,7 +40,7 @@
 	
 	
 	<div class="btn-group text-center" data-toggle="buttons">
-		<label class="btn btn-default">
+		<label class="btn btn-default" >
 		<input type="radio" name="searchTypeT" id="option1" value="t">제목
 		</label>
 		<label class="btn btn-default">
@@ -76,8 +76,8 @@
 					
 				success : function(result){
 					
-					
 						var str1 = "";
+						
 					$(result.list).each(function(){
 						
 						
@@ -136,11 +136,49 @@
 		
 			function searchList(page, searchType, keyword) {
 				
+				var listStr = "";
 				
+				
+				
+				$.ajax({
+					
+					type : "get",
+					url : "/board/list/" + page + "/" + searchType + "/" + keyword ,
+					header : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Mthod-Override" : "GET"
+					},
+					contentType : 'application/json',
+					data : JSON.stringify(page , searchType, encodeURI(keyword)),
+					dataType : 'json',
+					success : 
+						function(searchList) {
+						
+						
+    	    			
+						$(searchList.list).each(function(){
+						
+							listStr += "<tr><td>" + this.bno + "</td><td><a href='/board/get?bno="+this.bno+"'>" + this.title
+							+ "</a></td><td>" + this.writer + "</td><td>" + this.regdate
+							+ "</td><td class='updatedate'>" + this.updatedate + "</td></tr>";
+
+							
+						});
+					}
+					
+				});
 				
 			}
  			
-			
+			$("#searchBtn").on("click", function(){
+				
+				var searchType = $('input[name="searchTypeT"]:checked').val();
+				
+				var keyword = $("#keywordInput").val();
+				
+				searchList(1, searchType, keyword);
+				
+			});
 		
 		});
 	</script>
