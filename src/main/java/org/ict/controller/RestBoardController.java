@@ -180,17 +180,18 @@ public class RestBoardController {
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		Criteria cri = new Criteria();
-		
-		cri.setPage(page);
 		
 		SearchCriteria search = new SearchCriteria();
+
+		search.setPage(page);
 		
 		search.setSearchType(searchType);
 		
 		search.setKeyword(keyword);
 		
-		List<BoardVO> list = service.listSearch(cri, searchType, keyword);
+		List<BoardVO> list = service.listSearch(search, searchType, keyword);
+		
+		
 		
 		int count = service.searchCountPage(search);
 		
@@ -199,9 +200,11 @@ public class RestBoardController {
 		pageMaker.setTotalBoard(count);
 		
 		result.put("list", list);
-		result.put("cri", cri);
+		result.put("search", search);
 		result.put("pageMaker", pageMaker);
-		
+		log.info(list);
+		log.info(search);
+		log.info(pageMaker);
 		try {
 			
 			entity = new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);

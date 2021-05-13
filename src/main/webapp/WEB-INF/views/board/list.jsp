@@ -54,6 +54,7 @@
 		<button class="btn btn-primary btn-lg" id=searchBtn>검색</button>
 	
 </div>
+		<input type="hidden" id="hiddenNum" value="0">
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -85,44 +86,53 @@
 							+ "</a></td><td>" + this.writer + "</td><td>" + this.regdate
 							+ "</td><td class='updatedate'>" + this.updatedate + "</td></tr>";
 						
-						
+						paging(result.pageMaker);
 					});
 					
 					
  					$("#boardList").html(str1);
+ 					
+ 					$("#hiddenNum").val("1");
 				
+					 
+				}
+ 					
+				
+			});
+		}
+					
+					
+				function paging(pageMaker){	
+					
 					
 					var str = "";
-					 
-				
 					
-					if(result.pageMaker.prev){
+					if(pageMaker.prev){
 					
-					str += "<li class='page-item'><a class='page-link' href = '"+ (result.pageMaker.startPage - 1) +"'>"
+					str += "<li class='page-item'><a class='page-link' href = '"+ (pageMaker.startPage - 1) +"'>"
 						+" << </a></li>";
 					
 					}
 					
-					for (var i = result.pageMaker.startPage, len = result.pageMaker.endPage; i <= len; i++) {
+					for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
 						
-						var active = result.pageMaker.cri.page == i ? 'active' : '';
+						var active = pageMaker.cri.page == i ? 'active' : '';
 						str += "<li class='page-item" + active + "'><a class='page-link' href='" + i + "'>" + i +
 						"</a></li>";
 					}
 					
-					if(result.pageMaker.next) {
+					if(pageMaker.next) {
 						
-						str += "<li class='page-item'><a class='page-link' href='" + (result.pageMaker.endPage + 1) +
+						str += "<li class='page-item'><a class='page-link' href='" + (pageMaker.endPage + 1) +
 						"'> >> </a></li>";
 					}
 					
 					$("#pagination").html(str);
-				
 				}
 			
-			});
-		}
-			listCriteria(1);
+			
+				listCriteria(1);
+			
 			
 			$("#pagination").on("click", "li a", function(e) {
 				
@@ -130,13 +140,25 @@
 				
 				formPage = $(this).attr("href");
 				
-				listCriteria(formPage);
+				if($("#hiddenNum").val() == 1){
+					
+					listCriteria(formPage);
+				}else if($("#hiddenNum").val() == 2){
+					
+					var searchType = $('input[name="searchTypeT"]:checked').val();
+					
+					var keyword = $("#keywordInput").val();
+					
+					searchList(formPage, searchType, keyword);
+				}else{};
+				
+				
 			});
 			
 		
 			function searchList(page, searchType, keyword) {
 				
-				var listStr = "";
+				var searchListStr = "";
 				
 				
 				
@@ -158,12 +180,18 @@
     	    			
 						$(searchList.list).each(function(){
 						
-							listStr += "<tr><td>" + this.bno + "</td><td><a href='/board/get?bno="+this.bno+"'>" + this.title
+							searchListStr += "<tr><td>" + this.bno + "</td><td><a href='/board/get?bno="+this.bno+"'>" + this.title
 							+ "</a></td><td>" + this.writer + "</td><td>" + this.regdate
 							+ "</td><td class='updatedate'>" + this.updatedate + "</td></tr>";
 
 							
 						});
+						
+						$("#boardList").html(searchListStr);
+						
+						paging(searchList.pageMaker);
+						
+						$("#hiddenNum").val("2");
 					}
 					
 				});

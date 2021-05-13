@@ -57,8 +57,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> listSearch(Criteria cri, String searchType, String keyword) {
-		return mapper.listSearch(cri, searchType, keyword);
+	public List<BoardVO> listSearch(SearchCriteria search, String searchType, String keyword) {
+		return mapper.listSearch(search, searchType, keyword);
 	}
 
 	@Override
