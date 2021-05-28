@@ -17,7 +17,7 @@
 	<br><br>
 		제목	 : <input class="form-control" type="text" id="title" name="title"><br><hr>
 		내용	 : <input class="form-control" type="text" name="content" id="content"><br><hr>
-		작성자 : <input class="form-control" type="text" name="writer" id="writer"><br><hr>
+		작성자 : <input class="form-control" type="text" name="writer" id="writer" value="${login.uid }" readonly><br><hr>
 		작성일자: <input class="form-control" type="text" name="regdate" readonly><br><hr>
 	<input type="button" class="btn btn-primary float-right" id="complBtn" value="완료">
 	</div>

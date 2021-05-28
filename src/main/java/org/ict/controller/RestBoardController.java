@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,8 @@ import lombok.extern.log4j.Log4j;
 
 @RestController
 @Log4j
-@RequestMapping("/board")
+@RequestMapping("/board/*")
+@CrossOrigin("*")
 public class RestBoardController {
 
 	@Autowired
@@ -58,7 +60,6 @@ public class RestBoardController {
 	public ResponseEntity<String> register(@RequestBody BoardVO board) {
 		
 		ResponseEntity<String> entity = null;
-		log.info(board);
 		try {
 			service.insert(board);
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
@@ -116,7 +117,6 @@ public class RestBoardController {
 					,consumes="application/json")
 	public ResponseEntity<String> modify( @RequestBody BoardVO board){
 		
-		log.info(board);
 		
 		ResponseEntity<String> entity = null;
 		
@@ -126,7 +126,6 @@ public class RestBoardController {
 			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			
-			log.info(entity);
 		} catch(Exception e) {
 			
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -180,16 +179,19 @@ public class RestBoardController {
 		
 		Map<String, Object> result = new HashMap<>();
 		
+		Criteria cri = new Criteria();
+		
+		cri.setPage(page);
+		
 		
 		SearchCriteria search = new SearchCriteria();
 
-		search.setPage(page);
 		
 		search.setSearchType(searchType);
 		
 		search.setKeyword(keyword);
 		
-		List<BoardVO> list = service.listSearch(search, searchType, keyword);
+		List<BoardVO> list = service.listSearch(cri, searchType, keyword);
 		
 		
 		
@@ -197,14 +199,13 @@ public class RestBoardController {
 		
 		PageMaker pageMaker = new PageMaker();
 		
+		pageMaker.setCri(cri);
+		
 		pageMaker.setTotalBoard(count);
 		
 		result.put("list", list);
 		result.put("search", search);
 		result.put("pageMaker", pageMaker);
-		log.info(list);
-		log.info(search);
-		log.info(pageMaker);
 		try {
 			
 			entity = new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);

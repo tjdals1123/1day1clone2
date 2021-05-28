@@ -23,7 +23,7 @@ public interface BoardMapper {
 	
 	public int totalcount();
 
-	public List<BoardVO> listSearch(@Param("search")SearchCriteria cri
+	public List<BoardVO> listSearch(@Param("cri")Criteria cri
 									, @Param("searchType") String searchType 
 									, @Param("keyword") String keyword);
 

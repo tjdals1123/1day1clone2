@@ -30,7 +30,7 @@
 	<input type="button" class="btn btn-danger float-right" id="deleteBtn" value="삭제">
 	</div>
 		
-		
+	<div id ="replwrite">	
 	<div class="row">
 		<h3 class="text-primary">댓글 작성</h3>
 	</div>
@@ -38,6 +38,8 @@
 		<textarea rows="4" cols="50" id="replcontent"></textarea>
 		<button class="btn btn-primary ml-1" id="replWrite">작성완료</button>
 	</div>
+	</div>
+	
 	<div class="row">
 		<h3 class="text-primary">댓글</h3><br><br>
 	</div><!-- row -->
@@ -58,7 +60,8 @@
 			</table>
 		</div>
 	</div>	
-		
+	<input type="hidden" id="uid" name="uid" value="${login.uid}">
+	
 	
 	<div class="row">
 		<ul class="pagination">
@@ -111,12 +114,18 @@
 				
 				if(board.updatedate != null){
 					
-				str += "<input class='form-control' type='text' name='updatedate' id='updatedate' value='"+ board.updatedate +"' readonly><br><hr>"
+				str += "<input class='form-control' type='text' name='updatedate' id='updatedate' value='"+ board.updatedate +"' readonly><br><hr>";
+				
 				
 				
 				$("#get").append(str);
 				
 				}
+				
+				if($("#uid").val() != board.writer){
+					$("#modifyBtn").hide();
+					$("#deleteBtn").hide();
+				} 
 				
 			}
 			
@@ -125,7 +134,6 @@
 		
 		$("#deleteBtn").on("click", function(){
 			
-			timeCalc()
 			
 			$.ajax({
 				
@@ -194,9 +202,50 @@
 			}
 		});
 		
+		console.log($("#uid").val());
+		
+		if($("#uid").val() == ""){
+			
+			$("#replwrite").hide();
+		} // 비로그인 상태에서 댓글 작성창 가림
+		
+		
+		$("#replWrite").on("click", function(){
+			
+			var bno = $("#bnoo").val();
+			var replyer = $("#uid").val();
+			var content = $("#replcontent").val();
+			
+			console.log(bno);
+			console.log(replyer);
+			console.log(content);
+			
+			$.ajax({
+				
+				type : 'post',
+				url : '/replies',
+				header : {
+					
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : 
+					 JSON.stringify(bno, replyer, content),
+				
+				success : function(result){
+					
+					alert("전송 완료");
+				}
+			});
+		});
+		
+		
 	});
 
-	// 로그인 처리 후 리플 작성 구현, 모달창으로 수정 삭제 기능 구현
+	
+	
+	//로그인 처리 후 리플 작성 구현, 모달창으로 수정 삭제 기능 구현
 </script>	
 </body>
 </html>

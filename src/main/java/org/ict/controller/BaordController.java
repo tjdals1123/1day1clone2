@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("board/")
 public class BaordController {
 
-	@RequestMapping("/list")
-	public void list() {
-		
-	}
+//	@RequestMapping("/list")
+//	public void list() {
+//		
+//	}
 	
 	@RequestMapping("/register")
 	public void register(){

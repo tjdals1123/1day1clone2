@@ -13,7 +13,9 @@
 </head>
 <body>
 	
-	<div class="container">
+	
+	<div class="container"><br><br>
+	<h1 class="text-primary text-center">게시글 리스트</h1><br><br><br><br><br>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -28,11 +30,11 @@
 			
 			</tbody>
 		</table>
-		<div class="text-center">
-			<ul id="pagination" class="pagination">
+		<div class="row" style="text-align:center;">
+			<ul id="pagination" class="pagination" >
 			
 			</ul>
-			<ul id="search" class="search">
+			<ul id="search" class="search" >
 			
 			</ul>
 		</div>
@@ -85,7 +87,6 @@
 						str1 += "<tr><td>" + this.bno + "</td><td><a href='/board/get?bno="+this.bno+"'>" + this.title
 							+ "</a></td><td>" + this.writer + "</td><td>" + this.regdate
 							+ "</td><td class='updatedate'>" + this.updatedate + "</td></tr>";
-						
 						paging(result.pageMaker);
 					});
 					
@@ -117,7 +118,9 @@
 					for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
 						
 						var active = pageMaker.cri.page == i ? 'active' : '';
-						str += "<li class='page-item" + active + "'><a class='page-link' href='" + i + "'>" + i +
+						
+						
+						str += "<li class='page-item " + active + "'><a class='page-link' href='" + i + "'>" + i +
 						"</a></li>";
 					}
 					
@@ -143,14 +146,14 @@
 				if($("#hiddenNum").val() == 1){
 					
 					listCriteria(formPage);
+					
 				}else if($("#hiddenNum").val() == 2){
 					
 					var searchType = $('input[name="searchTypeT"]:checked').val();
 					
 					var keyword = $("#keywordInput").val();
-					
 					searchList(formPage, searchType, keyword);
-				}else{};
+				}else{}
 				
 				
 			});
@@ -188,7 +191,6 @@
 						});
 						
 						$("#boardList").html(searchListStr);
-						
 						paging(searchList.pageMaker);
 						
 						$("#hiddenNum").val("2");

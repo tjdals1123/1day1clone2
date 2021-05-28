@@ -27,7 +27,7 @@ public class ReplyController {
 	private ReplyService service;
 	
 	@PostMapping(value="", consumes = "applicateion/json"
-					, produces = {MediaType.TEXT_PLAIN_VALUE})
+					, produces = {MediaType.TEXT_PLAIN_VALUE,MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<String> register(@RequestBody ReplyVO vo){
 		
 		ResponseEntity<String> entity = null;

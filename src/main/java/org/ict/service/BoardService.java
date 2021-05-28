@@ -23,7 +23,7 @@ public interface BoardService {
 
 	public int totalcount();
 
-	public List<BoardVO> listSearch(@Param("search")SearchCriteria search, @Param("searchType")String searchType, @Param("keyword")String keyword);
+	public List<BoardVO> listSearch(@Param("cri")Criteria cri, @Param("searchType")String searchType, @Param("keyword")String keyword);
 
 	public int searchCountPage(SearchCriteria search);
 }

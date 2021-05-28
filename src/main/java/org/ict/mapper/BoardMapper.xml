@@ -72,7 +72,7 @@
 		<include refid="search"></include>
 		
 		ORDER BY bno DESC, regdate DESC
-		LIMIT #{search.pageStart}, #{search.number}
+		LIMIT #{cri.pageStart}, #{cri.number}
 	
 	</select> 
 	
