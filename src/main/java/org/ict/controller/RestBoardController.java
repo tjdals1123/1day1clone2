@@ -157,7 +157,7 @@ public class RestBoardController {
 		
 		result.put("pageMaker", pageMaker);
 		
-		
+		log.info(pageMaker);
 		try {
 			
 			entity = new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);

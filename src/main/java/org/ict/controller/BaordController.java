@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BaordController {
 
 //	@RequestMapping("/list")
-//	public void list() {
+//		public void list() {
 //		
 //	}
 	
